@@ -54,6 +54,7 @@ import ContactForm from "./components/ContactForm";
 // import Blog from "./pages/Blog";
 import Services from "../src/pages/Sevices";
 import Contact from "../src/pages/Contact";
+import Footer from "./components/Footer.js";
 
 function HomePage() {
   return (
@@ -88,6 +89,7 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
+      <Footer />
     </>
   );
 }

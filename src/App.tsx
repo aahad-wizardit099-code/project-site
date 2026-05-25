@@ -34,7 +34,7 @@
 
 import "./App.css";
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 
@@ -55,6 +55,7 @@ import ContactForm from "./components/ContactForm";
 import Services from "../src/pages/Sevices";
 import Contact from "../src/pages/Contact";
 import Footer from "./components/Footer.js";
+import DemoTest from "../src/pages/DemoTest.js";
 
 function HomePage() {
   return (
@@ -74,10 +75,14 @@ function HomePage() {
 }
 
 function App() {
+  const location = useLocation();
+
+  // Hide navbar/footer on demo page
+  const hideLayout = location.pathname === "/demo";
   return (
     <>
-      <Navbar />
-
+      {/* <Navbar /> */}
+      {!hideLayout && <Navbar />}
       <Routes>
         {/* Home */}
         <Route path="/" element={<HomePage />} />
@@ -88,8 +93,11 @@ function App() {
         {/* Services */}
         <Route path="/services" element={<Services />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/demo" element={<DemoTest />} />
       </Routes>
-      <Footer />
+      {!hideLayout && <Footer />}
+
+      {/* <Footer /> */}
     </>
   );
 }

@@ -34,33 +34,34 @@
 
 import "./App.css";
 
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
-import Navbar from "./components/Navbar";
+// import Navbar from "./components/Navbar";
 
 // Home Components
-import Hero from "./components/Hero.js";
-import Service from "./components/Service.js";
-import ServiceProvided from "./components/Provide.js";
-import TradingPlatform from "./components/TradingPlatform.js";
-import WhyZeroTrade from "./components/WhyZeroTrade.js";
-import Roadmap from "./components/Roadmap";
-import CRMBackOffice from "./components/CrmBack.js";
-import Infographic from "./components/Infographic.js";
-import OurServices from "./components/OurServices.js";
-import ContactForm from "./components/ContactForm";
+// import Hero from "./components/Hero.js";
+// import Service from "./components/Service.js";
+// import ServiceProvided from "./components/Provide.js";
+// import TradingPlatform from "./components/TradingPlatform.js";
+// import WhyZeroTrade from "./components/WhyZeroTrade.js";
+// import Roadmap from "./components/Roadmap";
+// import CRMBackOffice from "./components/CrmBack.js";
+// import Infographic from "./components/Infographic.js";
+// import OurServices from "./components/OurServices.js";
+// import ContactForm from "./components/ContactForm";
 
 // Pages
 // import Blog from "./pages/Blog";
-import Services from "../src/pages/Sevices";
-import Contact from "../src/pages/Contact";
-import Footer from "./components/Footer.js";
+// import Services from "../src/pages/Sevices";
+// import Contact from "../src/pages/Contact";
+// import Footer from "./components/Footer.js";
 import DemoTest from "../src/pages/DemoTest.js";
 
 function HomePage() {
   return (
     <>
-      <Hero />
+      <DemoTest />
+      {/* <Hero />
       <Service />
       <ServiceProvided />
       <TradingPlatform />
@@ -69,20 +70,20 @@ function HomePage() {
       <CRMBackOffice />
       <Infographic />
       <OurServices />
-      <ContactForm />
+      <ContactForm /> */}
     </>
   );
 }
 
 function App() {
-  const location = useLocation();
+  // const location = useLocation();
 
   // Hide navbar/footer on demo page
-  const hideLayout = location.pathname === "/demo";
+  // const hideLayout = location.pathname === "/demo";
   return (
     <>
       {/* <Navbar /> */}
-      {!hideLayout && <Navbar />}
+      {/* {!hideLayout && <Navbar />} */}
       <Routes>
         {/* Home */}
         <Route path="/" element={<HomePage />} />
@@ -91,11 +92,11 @@ function App() {
         {/* <Route path="/blog" element={<Blog />} /> */}
 
         {/* Services */}
-        <Route path="/services" element={<Services />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/demo" element={<DemoTest />} />
+        {/* <Route path="/services" element={<Services />} /> */}
+        {/* <Route path="/contact" element={<Contact />} /> */}
+        {/* <Route path="/demo" element={<DemoTest />} /> */}
       </Routes>
-      {!hideLayout && <Footer />}
+      {/* {!hideLayout && <Footer />} */}
 
       {/* <Footer /> */}
     </>

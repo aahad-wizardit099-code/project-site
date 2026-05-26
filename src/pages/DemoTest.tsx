@@ -1,176 +1,99 @@
-// import { useEffect, useState } from "react";
-
-// function DemoTest() {
-//   const [users, setUsers] = useState([]);
-
-//   useEffect(() => {
-//     fetch("https://randomuser.me/api/?results=5")
-//       .then((res) => res.json())
-//       .then((data) => setUsers(data.results));
-//   }, []);
-
-//   return (
-//     <div>
-//       {users.map((user, index) => (
-//         <div key={index}>
-//           <h2>{user.name.first}</h2>
-//         </div>
-//       ))}
-//     </div>
-//   );
-// }
-
-// export default DemoTest;
 import { useEffect, useState } from "react";
 
-interface User {
-  name: {
-    first: string;
-    last: string;
-  };
-  email: string;
-  phone: string;
-  picture: {
-    medium: string;
-  };
-  login: {
-    username: string;
-  };
-  location: {
-    country: string;
-  };
-}
+type CryptoData = {
+  symbol: string;
+  price: string;
+};
+
+const initialCoins: CryptoData[] = [
+  { symbol: "BTCUSDT", price: "0" },
+  { symbol: "ETHUSDT", price: "0" },
+  { symbol: "BNBUSDT", price: "0" },
+];
 
 export default function DemoTest() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [search, setSearch] = useState<string>("");
+  const [coins, setCoins] = useState<CryptoData[]>(initialCoins);
+
+  const [status, setStatus] = useState("Connecting...");
 
   useEffect(() => {
-    fetch("https://randomuser.me/api/?results=15")
-      .then((res) => res.json())
-      .then((data) => {
-        setUsers(data.results);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("API Error:", error);
-        setLoading(false);
-      });
+    const ws = new WebSocket(
+      "wss://stream.binance.com:443/stream?streams=btcusdt@trade/ethusdt@trade/bnbusdt@trade"
+    );
+
+    ws.onopen = () => {
+      setStatus("Connected");
+    };
+
+    ws.onmessage = (event) => {
+      const response = JSON.parse(event.data);
+
+      const data = response.data;
+
+      setCoins((prev) =>
+        prev.map((coin) =>
+          coin.symbol === data.s
+            ? {
+                ...coin,
+                price: Number(data.p).toFixed(2),
+              }
+            : coin
+        )
+      );
+    };
+
+    ws.onerror = () => {
+      setStatus("Error");
+    };
+
+    ws.onclose = () => {
+      setStatus("Closed");
+    };
+
+    return () => ws.close();
   }, []);
 
-  const filteredUsers = users.filter((user) =>
-    `${user.name.first} ${user.name.last}`
-      .toLowerCase()
-      .includes(search.toLowerCase())
-  );
-
   return (
-    <div className="min-h-screen bg-slate-950 text-white p-8">
-      {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 mb-8">
-        <div>
-          <h1 className="text-4xl font-bold tracking-tight">Users Dashboard</h1>
+    <div className="min-h-screen bg-black text-white flex items-center justify-center p-6">
+      <div className="w-full max-w-lg bg-zinc-900 rounded-2xl p-6 border border-zinc-700">
+        <h1 className="text-3xl font-bold text-center mb-6">
+          Live Crypto Prices
+        </h1>
 
-          <p className="text-slate-400 mt-2">API Table</p>
+        <div className="flex justify-center mb-6">
+          <span
+            className={`px-4 py-2 rounded-full text-sm font-semibold ${
+              status === "Connected" ? "bg-green-500" : "bg-red-500"
+            }`}
+          >
+            {status}
+          </span>
         </div>
 
-        {/* Search */}
-        <input
-          type="text"
-          placeholder="Search users..."
-          value={search}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setSearch(e.target.value)
-          }
-          className="bg-slate-900 border border-slate-700 px-5 py-3 rounded-2xl outline-none w-full lg:w-80 focus:border-blue-500 transition"
-        />
-      </div>
+        <div className="space-y-4">
+          {coins.map((coin) => (
+            <div
+              key={coin.symbol}
+              className="bg-zinc-800 border border-zinc-700 rounded-xl p-5 flex justify-between items-center"
+            >
+              <div>
+                <p className="text-zinc-400 text-sm">Currency</p>
 
-      {/* Table Container */}
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            {/* Table Head */}
-            <thead className="bg-slate-800 text-slate-300">
-              <tr>
-                <th className="text-left px-6 py-5 font-semibold">User</th>
-                <th className="text-left px-6 py-5 font-semibold">Email</th>
-                <th className="text-left px-6 py-5 font-semibold">Country</th>
-                <th className="text-left px-6 py-5 font-semibold">Phone</th>
-                <th className="text-left px-6 py-5 font-semibold">Status</th>
-              </tr>
-            </thead>
+                <h2 className="text-2xl font-bold text-yellow-400">
+                  {coin.symbol}
+                </h2>
+              </div>
 
-            {/* Table Body */}
-            <tbody>
-              {loading ? (
-                <tr>
-                  <td colSpan={5} className="text-center py-12 text-slate-400">
-                    Loading users...
-                  </td>
-                </tr>
-              ) : filteredUsers.length === 0 ? (
-                <tr>
-                  <td colSpan={5} className="text-center py-12 text-slate-400">
-                    No users found
-                  </td>
-                </tr>
-              ) : (
-                filteredUsers.map((user: User, index: number) => (
-                  <tr
-                    key={index}
-                    className="border-t border-slate-800 hover:bg-slate-800/40 transition duration-300"
-                  >
-                    {/* User */}
-                    <td className="px-6 py-5">
-                      <div className="flex items-center gap-4">
-                        <img
-                          src={user.picture.medium}
-                          alt={`${user.name.first} ${user.name.last}`}
-                          className="w-12 h-12 rounded-full border border-slate-700"
-                        />
+              <div className="text-right">
+                <p className="text-zinc-400 text-sm">Live Price</p>
 
-                        <div>
-                          <h2 className="font-semibold text-white">
-                            {user.name.first} {user.name.last}
-                          </h2>
-
-                          <p className="text-sm text-slate-400">
-                            @{user.login.username}
-                          </p>
-                        </div>
-                      </div>
-                    </td>
-
-                    {/* Email */}
-                    <td className="px-6 py-5 text-slate-300">{user.email}</td>
-
-                    {/* Country */}
-                    <td className="px-6 py-5 text-slate-300">
-                      {user.location.country}
-                    </td>
-
-                    {/* Phone */}
-                    <td className="px-6 py-5 text-slate-300">{user.phone}</td>
-
-                    {/* Status */}
-                    <td className="px-6 py-5">
-                      <span className="bg-emerald-500/20 text-emerald-400 px-4 py-2 rounded-full text-sm font-medium">
-                        Active
-                      </span>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                <h2 className="text-3xl font-bold text-green-400">
+                  ${coin.price}
+                </h2>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
-
-      {/* Footer */}
-      <div className="mt-5 text-slate-500 text-sm">
-        Showing {filteredUsers.length} users from API
       </div>
     </div>
   );

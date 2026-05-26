@@ -60,7 +60,6 @@ import DemoTest from "../src/pages/DemoTest.js";
 function HomePage() {
   return (
     <>
-      <DemoTest />
       {/* <Hero />
       <Service />
       <ServiceProvided />
@@ -71,6 +70,7 @@ function HomePage() {
       <Infographic />
       <OurServices />
       <ContactForm /> */}
+      <DemoTest />
     </>
   );
 }

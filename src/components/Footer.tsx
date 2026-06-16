@@ -1,5 +1,6 @@
 // Footer.tsx
 import { Phone } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const importantLinks = [
   "Standard Do's & Don'ts",
@@ -28,7 +29,7 @@ export default function Footer() {
           <div>
             {/* Logo */}
             <div className="flex items-center gap-3 mb-6">
-              <div className="relative w-16 h-16 rounded-xl bg-gradient-to-br from-yellow-400 via-orange-500 to-green-500 p-[2px] shadow-lg">
+              {/* <div className="relative w-16 h-16 rounded-xl bg-gradient-to-br from-yellow-400 via-orange-500 to-green-500 p-[2px] shadow-lg">
                 <div className="w-full h-full rounded-xl bg-[#020817] flex items-center justify-center">
                   <div className="relative flex items-end gap-[3px]">
                     <span className="w-1.5 h-5 bg-green-400 rounded-full"></span>
@@ -36,10 +37,17 @@ export default function Footer() {
                     <span className="w-1.5 h-11 bg-yellow-400 rounded-full"></span>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
-              <div>
-                <h2 className="text-4xl font-extrabold tracking-wide">
+              {/* <div> */}
+              <Link to="/">
+                <img
+                  src="/logo.jpeg"
+                  alt="logo"
+                  className="h-[52px] w-auto object-contain"
+                />
+              </Link>
+              {/* <h2 className="text-4xl font-extrabold tracking-wide">
                   <span className="text-yellow-400">T</span>
                   <span className="text-orange-400">W</span>
                   <span className="text-yellow-400">M</span>
@@ -47,8 +55,8 @@ export default function Footer() {
 
                 <p className="text-green-400 text-lg font-medium -mt-1">
                   Research Alert
-                </p>
-              </div>
+                </p> */}
+              {/* </div> */}
             </div>
 
             {/* Info */}

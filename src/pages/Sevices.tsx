@@ -108,11 +108,11 @@ export default function Services() {
             <h2 className="mb-8 text-5xl font-bold">Why Choose Us?</h2>
 
             <p className="text-2xl leading-[1.9] text-gray-200">
-              At IntelliFX Solutions, we provide innovative and customized
-              technology solutions to help you revolutionize your forex
-              brokerage. With our Forex Broker solutions, Forex CRM, and Forex
-              Website solutions, you can achieve your business goals faster and
-              more efficiently than ever before.
+              At Finova, we provide innovative and customized technology
+              solutions to help you revolutionize your forex brokerage. With our
+              Forex Broker solutions, Forex CRM, and Forex Website solutions,
+              you can achieve your business goals faster and more efficiently
+              than ever before.
             </p>
           </div>
         </div>

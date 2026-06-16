@@ -55,7 +55,7 @@ export default function Navbar() {
         <div className="shrink-0">
           <Link to="/">
             <img
-              src="/logo.png"
+              src="/logo.jpeg"
               alt="logo"
               className="h-[52px] w-auto object-contain"
             />

@@ -21,8 +21,8 @@ export default function Hero() {
             </h1>
 
             <p className="mt-5 max-w-xl text-sm leading-relaxed text-white/80 sm:text-base lg:text-lg">
-              TenxCode gives forex brokers everything they need to launch, run
-              and grow — Forex CRM, White Label Trading Platform, Mobile App, IB
+              Finova gives forex brokers everything they need to launch, run and
+              grow — Forex CRM, White Label Trading Platform, Mobile App, IB
               Management, PAMM, Copy Trading and full digital marketing support.
             </p>
 
